@@ -104,7 +104,7 @@ while True:
     contour_img[320:448 , 608:736] = added
     added = cv2.addWeighted(contour_img[320:448 , 64:192 , :], 0.5 , drum[0:128 , 0:128 , :] , 1 - 0.5   ,0 )
     contour_img[320:448 , 64:192] = added  
-    cv2.imshow("img" , contour_img )
+    cv2.imshow("win" , contour_img )
     if cv2.waitKey(1) & 0xff == ord('q') :
           break
         

@@ -4,7 +4,7 @@ from playsound import playsound
 import numpy as np 
 import time
 from threading import Thread
-cap = cv2.VideoCapture("http://192.168.29.43:8080/video")
+cap = cv2.VideoCapture(0)
 drum= cv2.imread("drum.png.jpg")
 drum = cv2.cvtColor( drum , cv2.COLOR_RGB2BGR)
 drum = cv2.resize(drum , ( 128 , 128))
@@ -19,7 +19,6 @@ lower = np.array(colours[ 0:3])
 higher = np.array(colours[3:6])
 coloursleft = np.array([ 99 , 30 , 174 ,  148  ,  98 , 2188 ])
 l = np.array(coloursleft[0:3])
-
 h = np.array(coloursleft[3:6])
 def play_sounds():     
     mixer.music.load("vinyl-snare-02.mp3")
@@ -38,31 +37,31 @@ def color_detection( img ):
     detect = np.sum(mask)
     
     return detect
-def color_detection1( img ):
-    hsv_img = cv2.cvtColor(img , cv2.COLOR_BGR2HSV)
-    mask = cv2.inRange(hsv_img , l , h )
-    detect = np.sum(mask)
-    return detect
+# def color_detection1( img ):
+#     hsv_img = cv2.cvtColor(img , cv2.COLOR_BGR2HSV)
+#     mask = cv2.inRange(hsv_img , l , h )
+#     detect = np.sum(mask)
+#     return detect
     # cv2.circle(contour_img , ( x , y ), 10 , ( 255 , 0 , 0) , cv2.FILLED)
-c = 1
 
-def getcontours(img):
-    hsv = cv2.cvtColor(img , cv2.COLOR_BGR2HSV)
-    mask = cv2.inRange(hsv , lower , higher)
-    contours , hierarchy = cv2.findContours(mask , cv2.RETR_EXTERNAL , cv2.CHAIN_APPROX_NONE)
-    x , y , w , h = 0 , 0 , 0 , 0 
+
+# def getcontours(img):
+#     hsv = cv2.cvtColor(img , cv2.COLOR_BGR2HSV)
+#     mask = cv2.inRange(hsv , lower , higher)
+#     contours , hierarchy = cv2.findContours(mask , cv2.RETR_EXTERNAL , cv2.CHAIN_APPROX_NONE)
+#     x , y , w , h = 0 , 0 , 0 , 0 
     
     
-    for cnt in contours:           
-        img_cnt = cv2.contourArea(cnt)
-        cv2.drawContours(contour_img , cnt , -1 , ( 255 , 0 , 0 ) , 3 )
-        peri = cv2.arcLength(cnt , True )
-        approx = cv2.approxPolyDP(cnt, 0.002*peri,True)
-        x , y , w , h = cv2.boundingRect(approx)
+#     for cnt in contours:           
+#         img_cnt = cv2.contourArea(cnt)
+#         cv2.drawContours(contour_img , cnt , -1 , ( 255 , 0 , 0 ) , 3 )
+#         peri = cv2.arcLength(cnt , True )
+#         approx = cv2.approxPolyDP(cnt, 0.002*peri,True)
+#         x , y , w , h = cv2.boundingRect(approx)
        
 
                
-    return  (x,y )
+#     return  (x,y )
 a = 0      
 b = 0
 n = 0 
@@ -74,7 +73,6 @@ while True:
    
     _ , im = cap.read()
     im = cv2.resize(im , ( 800 , 512 ))
-    im = cv2.flip(im , -1 ,None)
     s2 = im.copy()
     s2 = s2[320:448 , 608:736]
     
